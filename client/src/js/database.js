@@ -1,13 +1,15 @@
 import { openDB } from 'idb';
 
+const dbname = 'jate'
+
 const initdb = async () =>
-  openDB('jate', 1, {
+  openDB(dbname, 1, {
     upgrade(db) {
-      if (db.objectStoreNames.contains('jate')) {
+      if (db.objectStoreNames.contains(dbname)) {
         console.log('jate database already exists');
         return;
       }
-      db.createObjectStore('jate', { keyPath: 'id', autoIncrement: true });
+      db.createObjectStore(dbname, { keyPath: 'id', autoIncrement: true });
       console.log('jate database created');
     },
   });
@@ -16,7 +18,7 @@ const initdb = async () =>
 export const putDb = async (content) => {
   console.log("put Request Recieved");
 
-    const dbname = 'jate'
+    
     const database = await openDB(dbname,1);
     const transact = database.transaction(dbname, "readwrite");
     const store = transact.objectStore(dbname);
