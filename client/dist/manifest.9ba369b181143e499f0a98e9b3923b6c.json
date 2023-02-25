@@ -1,0 +1,8 @@
+{
+  "name": "manifest.json",
+  "short_name": "manifest.json",
+  "orientation": "portrait",
+  "display": "standalone",
+  "start_url": ".",
+  "fingerprint": false
+}
