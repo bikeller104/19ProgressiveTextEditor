@@ -24,13 +24,22 @@ warmStrategyCache({
   strategy: pageCache,
 });
 
-registerRoute(({ request }) => request.mode === 'navigate', pageCache);
+
+//Comment out this code block 
+//******************************** */
+//registerRoute(({ request }) => request.mode === 'navigate', pageCache);
 
 // TODO: Implement asset caching
 //found info here https://stackoverflow.com/questions/66538667/can-i-have-both-workbox-registerroute-and-service-worker-fetch-event-handler-at
 // and 
 // https://developer.chrome.com/docs/workbox/caching-resources-during-runtime/#applying-caching-strategies-with-route-matching
-registerRoute((request) => { 
+//registerRoute((request) => { 
   //if the request url matches one in the cache then recache it?
-  caches.match(request)
-}, pageCache/*use the created object instead of creating a  new one*/);
+  //caches.match(request)
+//}, pageCache/*use the created object instead of creating a  new one*/);
+//********************************************************* */
+
+//from ASK BCS
+registerRoute((request) => { 
+  return caches.match(request);
+}, pageCache);
