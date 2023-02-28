@@ -2,7 +2,7 @@ import { openDB } from 'idb';
 
 const dbname = 'jate'
 
-export const initdb = async () => {
+const initdb = async () => {
   openDB('jate', 1, {
     upgrade(db) {
       console.log("upgrading database");
@@ -32,7 +32,7 @@ export const putDb = async (content) => {
     const request = store.put({id: 1, content: content })
     console.log(`created request ${JSON.stringify(request)}`);
     const result = await request;
-    return result?.value;
+    //return result?.value;
 }
 
 // TODO: Add logic for a method that gets all the content from the database
@@ -43,14 +43,35 @@ export const getDb = async () =>{
     console.log(`opened db ${JSON.stringify(database)}`);
     const transact = database.transaction('jate', "readonly");
     const store = transact.objectStore('jate');
+    console.log(`created store ${JSON.stringify(store)}`);
     //const request = store.get('content')
     const request = store.get(1);
+    console.log(`created request ${JSON.stringify(request)}`);
+    // const result = await request;
+    
+    // console.log(`returning result: ${result}`);
+    
+    //ask BCS
     const result = await request;
-    console.log(`queryed database for result: ${result}`)
+    if(result){
+      console.log(`queryed database for result: ${result[0]}`)
+      console.log({result});
+      console.log(result["result"]);
+      console.log(result.content);
 
-    console.log(`returning result: ${result}`);
-    return result?.vaule;
+    }
+  result
+    ? console.log('🚀 - data retrieved from the database', result.value)
+    : console.log('🚀 - data not found in the database');
+    return result?.content;
 } 
 
-console.log("program started");
-initdb();
+
+//ask bcs - await init db
+async function main() {
+  console.log("program started");
+  await initdb();
+  console.log("database inited");
+}
+
+main();
